@@ -122,8 +122,8 @@ public class NewOutgoingCallIntentBroadcaster {
                         disconnectTimeout = getDisconnectTimeoutFromApp(
                                 getResultExtras(false), disconnectTimeout);
                         endEarly = true;
-                    } else if (TelephonyUtil.isPotentialLocalEmergencyNumber(
-                            resultNumber)) {
+                } else if (TelephonyUtil.isPotentialLocalEmergencyNumber(
+                        mPhoneNumberUtilsAdapter, mContext, resultNumber)) {
                         Log.w(this, "Cannot modify outgoing call to emergency number %s.",
                                 resultNumber);
                         disconnectTimeout = 0;
@@ -449,7 +449,8 @@ public class NewOutgoingCallIntentBroadcaster {
      */
     private boolean isPotentialEmergencyNumber(String number) {
         Log.v(this, "Checking restrictions for number : %s", Log.pii(number));
-        return (number != null) && TelephonyUtil.isPotentialLocalEmergencyNumber(number);
+        return (number != null) && TelephonyUtil.isPotentialLocalEmergencyNumber(
+                                                    mPhoneNumberUtilsAdapter, mContext, number);
     }
 
     /**
